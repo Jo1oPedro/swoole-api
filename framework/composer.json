@@ -8,7 +8,6 @@
     "require": {
         "nikic/fast-route": "^1.3",
         "symfony/var-dumper": "^7.0",
-        "ilexn/swoole-convert-psr7": "^0.6.1",
         "php-di/php-di": "^7.0"
     },
     "require-dev": {
