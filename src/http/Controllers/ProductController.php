@@ -9,6 +9,10 @@ class ProductController
     public function index()
     {
         return Response::ok('sucesso');
-        //return [200, ['Content-Type' => 'application/json'], json_encode('sucesso')];
+    }
+
+    public function show(int $id)
+    {
+
     }
 }
