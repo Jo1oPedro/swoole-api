@@ -48,6 +48,9 @@ RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction
 WORKDIR /var/www/html
 RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction
 
+COPY migrations.php /var/www/html/migrations.php
+COPY migrations-db.php /var/www/html/migrations-db.php
+
 #COPY public /var/www/html/public
 #COPY src /var/www/html/src
 #COPY config /var/www/html/config

@@ -9,6 +9,8 @@ services:
       - ./src:/var/www/html/src
       - ./framework:/var/www/html/framework
       - ./config:/var/www/html/config
+      - ./api:/var/www/html/api
+      - ./Migrations:/var/www/html/Migrations
     ports:
       - '9999:9999'
     tty: true
@@ -21,6 +23,8 @@ services:
   banco_de_dados_relacional:
     #image: mysql:5.7
     image: mysql:latest
+    expose:
+      - "3306"
     ports:
       - '5306:3306'
     restart: unless-stopped
@@ -32,6 +36,20 @@ services:
       MYSQL_DATABASE: docker-php
     volumes:
       - ./backupBD/database:/var/lib/mysql
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      restart: always
+      expose:
+        - "80"
+      ports:
+        - "8003:80"
+      volumes:
+        - ./docker/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+      environment:
+        #PMA_ARBITRARY: 1
+        PMA_HOST: banco_de_dados_relacional
+      depends_on:
+        - banco_de_dados_relacional
   mensageria:
     image: rabbitmq:management
     ports:
