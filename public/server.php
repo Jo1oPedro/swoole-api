@@ -1,16 +1,26 @@
 <?php
 
+use App\Database\Connection;
 use Cascata\Framework\Http\route\Router;
 use Cascata\Framework\Http\route\RouterGrouper;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 use Swoole\Http\Server;
+use Symfony\Component\Dotenv\Dotenv;
+
+Co::set(['hook_flags', SWOOLE_HOOK_ALL]);
 
 define("BASE_PATH", dirname(__DIR__));
 
 require_once BASE_PATH . "/vendor/autoload.php";
 require_once BASE_PATH . "/src/http/web/routes.php";
 require_once BASE_PATH . "/config/services.php";
+
+$dotEnv = new Dotenv();
+$dotEnv->load(BASE_PATH . "/api/.env");
+
+$pdo = Connection::getInstance();
+var_dump($pdo);
 
 $server = new Server('0.0.0.0', '9999');
 
