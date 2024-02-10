@@ -23,7 +23,7 @@ class Connection
                 $_ENV['DB_PASSWORD'],
                 self::OPTIONS
             );
-            return self::$pdo;
         }
+        return self::$pdo;
     }
 }
