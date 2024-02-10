@@ -1,0 +1,19 @@
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "framework"
+        }
+    ],
+    "require-dev": {
+        "swoole/ide-helper": "~5.0.0"
+    },
+    "require": {
+        "cascata/framework": "dev-main"
+    }
+}

@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  app:
+    build:
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./public:/var/www/html/public
+      - ./src:/var/www/html/src
+      - ./framework:/var/www/html/framework
+      - ./config:/var/www/html/config
+    ports:
+      - '9999:9999'
+    tty: true
+    stdin_open: true
+  banco_de_dados_em_memoria:
+    image: memcached:1.6.21
+    ports:
+      - '10211:11211'
+    command: -m 64
+  banco_de_dados_relacional:
+    #image: mysql:5.7
+    image: mysql:latest
+    ports:
+      - '5306:3306'
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: docker-php
+    volumes:
+      - ./backupBD/database:/var/lib/mysql
+  mensageria:
+    image: rabbitmq:management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
