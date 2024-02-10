@@ -4,59 +4,114 @@ namespace Cascata\Framework\Http;
 
 class Response
 {
-    public static function ok(mixed $data): array
+    private function __construct(
+        private int $statusCode = 200,
+        private array $headers = [],
+        private string $content = '',
+    ) {}
+
+    public function getStatusCode(): int
+    {
+        return $this->statusCode;
+    }
+
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
+
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    public function toArray(): array
     {
         return [
-            200,
-            ['Content-type', 'application/json'],
-            json_encode($data)
+            $this->getStatusCode(),
+            $this->getHeaders(),
+            $this->getContent()
         ];
     }
 
-    public static function error(int $code, string $reason): array
+    public static function ok(mixed $data): self
     {
-        return [
+        return new self(
+            200,
+            ['Content-type' => 'application/json'],
+            json_encode($data)
+        );
+    }
+
+    public static function error(int $code, string $reason): self
+    {
+        return new self(
             $code,
             ['Content-type' => 'application/json'],
             json_encode(['message' => $reason])
-        ];
+        );
     }
 
-    public static function internalServerError(string $reason): array
+    public static function internalServerError(string $reason): self
     {
-        return [
+        return new self(
             500,
             ['Content-type' => 'application/json'],
             json_encode(['message' => $reason])
-        ];
+        );
     }
 
-    public static function notFound(): array
+    public static function notFound(array $headers = [], string $data = ""): self
     {
-        return [404, [], ''];
+        return new self(
+            404,
+            $headers,
+            json_encode($data)
+        );
     }
 
-    public static function noContent(): array
+    public static function noContent(): self
     {
-        return [204, [], ''];
+        return new self(
+            204,
+            [],
+            ''
+        );
     }
 
-    public static function badRequest(mixed $errors): array
+    public static function badRequest(mixed $errors): self
     {
-        return [
+        return new self(
             400,
             ['Content-type' => 'application/json'],
             json_encode(['errors' => $errors])
-        ];
+        );
     }
 
-    public static function created($data): array
+    public static function created($data): self
     {
-        return [201, [], json_encode($data)];
+        return new self(
+            201,
+            [],
+            json_encode($data)
+        );
     }
 
-    public static function unauthorized(): array
+    public static function unauthorized(): self
     {
-        return [401, [], ''];
+        return new self(
+            401,
+            [],
+            ''
+        );
+    }
+
+    public static function methodNotAllowed(array $headers = [], string $data = ''): self
+    {
+        return new self(
+            401,
+            $headers,
+            json_encode($data)
+        );
     }
 }
