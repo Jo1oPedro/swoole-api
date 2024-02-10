@@ -19,9 +19,6 @@ require_once BASE_PATH . "/config/services.php";
 $dotEnv = new Dotenv();
 $dotEnv->load(BASE_PATH . "/api/.env");
 
-$pdo = Connection::getInstance();
-var_dump($pdo);
-
 $server = new Server('0.0.0.0', '9999');
 
 $server->on('start', function (Server $server) {
@@ -34,7 +31,11 @@ $server->on('request', function (Request $request, Response $response) {
        return;
     };
 
-    list($statusCode, $headers, $content) = (new Router(RouterGrouper::getInstance()))($request);
+    list(
+        $statusCode,
+        $headers,
+        $content
+    ) = (new Router(RouterGrouper::getInstance()))($request)->toArray();
 
     $response->setStatusCode($statusCode ?? 200);
     foreach($headers as $header => $value) {
