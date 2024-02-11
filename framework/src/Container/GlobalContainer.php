@@ -11,7 +11,7 @@ class GlobalContainer
 
     private function __construct() {}
 
-    public static function getInstance()
+    public static function getInstance(): ContainerInterface
     {
         if(is_null(self::$container)) {
             self::$container = new Container();
