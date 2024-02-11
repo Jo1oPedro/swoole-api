@@ -21,7 +21,7 @@ require_once BASE_PATH . "/src/http/web/routes.php";
 $container = require_once BASE_PATH . "/config/services.php";
 
 $dotEnv = new Dotenv();
-$dotEnv->load(BASE_PATH . "/api/.env");
+$dotEnv->load(BASE_PATH . "/apiEnvs/.env");
 
 $server = new Server('0.0.0.0', '9999');
 
