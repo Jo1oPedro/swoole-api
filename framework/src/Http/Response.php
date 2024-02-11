@@ -97,12 +97,12 @@ class Response
         );
     }
 
-    public static function unauthorized(): self
+    public static function unauthorized(string $data = ''): self
     {
         return new self(
             401,
             [],
-            ''
+            $data
         );
     }
 

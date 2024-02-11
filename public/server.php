@@ -31,11 +31,13 @@ $server->on('request', function (Request $request, Response $response) {
        return;
     };
 
+    $requestHandler = new \Cascata\Framework\Http\MIddleware\RequestHandler();
+
     list(
         $statusCode,
         $headers,
         $content
-    ) = (new Router(RouterGrouper::getInstance()))($request)->toArray();
+    ) = $requestHandler->handle($request)->toArray();
 
     $response->setStatusCode($statusCode ?? 200);
     foreach($headers as $header => $value) {
