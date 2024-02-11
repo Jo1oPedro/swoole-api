@@ -1,6 +1,6 @@
 <?php
 
-namespace Cascata\Framework\Http\MIddleware;
+namespace Cascata\Framework\Http\Middleware;
 
 use Cascata\Framework\Http\Response;
 use Swoole\Http\Request;
