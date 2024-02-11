@@ -1,6 +1,7 @@
 <?php
 
 use App\Database\Connection;
+use Cascata\Framework\Http\Middleware\RequestHandler;
 use Cascata\Framework\Http\route\Router;
 use Cascata\Framework\Http\route\RouterGrouper;
 use Swoole\Http\Request;
@@ -31,7 +32,7 @@ $server->on('request', function (Request $request, Response $response) {
        return;
     };
 
-    $requestHandler = new \Cascata\Framework\Http\MIddleware\RequestHandler();
+    $requestHandler = new RequestHandler();
 
     list(
         $statusCode,
