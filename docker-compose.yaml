@@ -11,6 +11,7 @@ services:
       - ./config:/var/www/html/config
       - ./api:/var/www/html/api
       - ./Migrations:/var/www/html/Migrations
+      - ./logs:/var/www/html/logs
     ports:
       - '9999:9999'
     tty: true
