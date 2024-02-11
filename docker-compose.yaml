@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  app:
+  api01: &api
     build:
       dockerfile: ./Dockerfile
     volumes:
@@ -16,6 +16,21 @@ services:
       - '9999:9999'
     tty: true
     stdin_open: true
+  api02:
+    <<: *api
+    ports:
+      - '10000:9999'
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/access.log:/var/log/nginx/access.log
+    depends_on:
+      - api01
+      - api02
+    ports:
+      - "8888:9999"
+
   banco_de_dados_em_memoria:
     image: memcached:1.6.21
     ports:
