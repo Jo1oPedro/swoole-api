@@ -4,6 +4,7 @@ use App\Database\Connection;
 use Cascata\Framework\Http\Middleware\RequestHandler;
 use Cascata\Framework\Http\route\Router;
 use Cascata\Framework\Http\route\RouterGrouper;
+use Psr\Container\ContainerInterface;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 use Swoole\Http\Server;
@@ -15,7 +16,9 @@ define("BASE_PATH", dirname(__DIR__));
 
 require_once BASE_PATH . "/vendor/autoload.php";
 require_once BASE_PATH . "/src/http/web/routes.php";
-require_once BASE_PATH . "/config/services.php";
+
+/** @var ContainerInterface $container */
+$container = require_once BASE_PATH . "/config/services.php";
 
 $dotEnv = new Dotenv();
 $dotEnv->load(BASE_PATH . "/api/.env");
