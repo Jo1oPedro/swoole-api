@@ -1,5 +1,6 @@
 <?php
 
+use App\Database\Connection;
 use Cascata\Framework\Container\GlobalContainer;
 use Cascata\Framework\Http\route\Route;
 use Monolog\Handler\StreamHandler;
@@ -15,6 +16,10 @@ $container->set('logger', function () {
 
 $container->set(Route::class, function () {
     return Route::getInstance();
+});
+
+$container->set(PDO::class, function () {
+    return Connection::getInstance();
 });
 
 return $container;
