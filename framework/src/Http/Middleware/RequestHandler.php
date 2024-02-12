@@ -10,8 +10,8 @@ use Swoole\Http\Request;
 class RequestHandler implements RequestHandlerInterface
 {
     private array $middlewares = [
-        Authenticate::class,
-        Success::class,
+        ExtractRouteInfo::class,
+        AnswerRequest::class
     ];
 
     public function handle(Request $request): Response
@@ -26,5 +26,10 @@ class RequestHandler implements RequestHandlerInterface
         return GlobalContainer::getInstance()
             ->get($middlewareClass)
             ->process($request, $this);
+    }
+
+    public function injectMiddleware(array $middlewares): void
+    {
+        array_unshift($this->middlewares, ...$middlewares);
     }
 }
