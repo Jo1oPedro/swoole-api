@@ -29,10 +29,17 @@ class Route extends RouteCollector
         return self::$instance;
     }
 
-    public function addMiddlewareGroup(callable $callback, array $middlewares): void
+    public function addGroup($prefix, callable $callback): self
+    {
+        parent::addGroup($prefix, $callback);
+        return $this;
+    }
+
+    public function addMiddlewareGroup(array $middlewares, callable $callback): self
     {
         $this->middlewareGroup = $middlewares;
         $callback($this);
+        return $this;
     }
 
     public function addRoute($httpMethod, $route, $handler)
