@@ -29,12 +29,12 @@ class ExtractRouteInfo implements MiddlewareInterface
             case Dispatcher::NOT_FOUND:
                 return Response::notFound(
                     ['Content-Type' => 'application/json'],
-                    'Not found'
+                    'Route not found'
                 );
             case Dispatcher::METHOD_NOT_ALLOWED:
                 return Response::methodNotAllowed(
                     ['Contenty-type' => 'application/json'],
-                    'Method not allowed'
+                    'Http method not allowed'
                 );
             case Dispatcher::FOUND:
                 $request->server = array_merge(

@@ -15,7 +15,8 @@
         "swoole/ide-helper": "~5.0.0"
     },
     "require": {
-        "cascata/framework": "dev-main"
+        "cascata/framework": "dev-main",
+        "ext-pdo": "*"
     },
     "scripts": {
         "create-migration": "vendor/bin/doctrine-migrations generate",

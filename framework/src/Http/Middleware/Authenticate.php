@@ -11,7 +11,7 @@ class Authenticate implements MiddlewareInterface
 {
     public function process(Request $request, RequestHandlerInterface $next): Response
     {
-        /*if(empty($request->header['authorization'])) {
+        if(empty($request->header['authorization'])) {
             return Response::unauthorized();
         }
 
@@ -21,7 +21,7 @@ class Authenticate implements MiddlewareInterface
             JWT::decode($token, new Key($_ENV['JWT_KEY'], 'HS256'));
         } catch (\Throwable $throwable) {
             return Response::unauthorized($throwable->getMessage());
-        }*/
+        }
 
         return $next->handle($request);
     }

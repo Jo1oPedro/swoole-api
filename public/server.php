@@ -1,9 +1,6 @@
 <?php
 
-use App\Database\Connection;
 use Cascata\Framework\Http\Middleware\RequestHandler;
-use Cascata\Framework\Http\route\Router;
-use Cascata\Framework\Http\route\RouterGrouper;
 use Psr\Container\ContainerInterface;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
@@ -15,7 +12,7 @@ Co::set(['hook_flags', SWOOLE_HOOK_ALL]);
 define("BASE_PATH", dirname(__DIR__));
 
 require_once BASE_PATH . "/vendor/autoload.php";
-require_once BASE_PATH . "/src/http/web/routes.php";
+require_once BASE_PATH . "/src/routes/api.php";
 
 /** @var ContainerInterface $container */
 $container = require_once BASE_PATH . "/config/services.php";
@@ -29,12 +26,12 @@ $server->on('start', function (Server $server) {
     echo 'HTTP Server ready at http://localhost:9999' . PHP_EOL;
 });
 
+
 $server->on('request', function (Request $request, Response $response) {
     if($request->server['request_uri'] === '/favicon.ico') {
        $response->end('');
        return;
     };
-
     $requestHandler = new RequestHandler();
 
     list(

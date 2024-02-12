@@ -1,10 +1,13 @@
 <?php
 
 use App\http\Controllers\ProductController;
+use App\http\Controllers\SignInController;
 use Cascata\Framework\Http\Middleware\Authenticate;
 use Cascata\Framework\Http\route\Route;
 
 $router = Route::getInstance();
+
+$router->addRoute('POST', '/signIn', [SignInController::class, 'signIn']);
 
 $router->addGroup('/products', function (Route $route) {
     $route->addRoute('GET', '', [ProductController::class, 'index']);
