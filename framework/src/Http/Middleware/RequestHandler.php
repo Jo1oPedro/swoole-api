@@ -10,8 +10,8 @@ use Swoole\Http\Request;
 class RequestHandler implements RequestHandlerInterface
 {
     private array $middlewares = [
-        ParseRequest::class,
         ExtractRouteInfo::class,
+        ParseRequest::class,
         AnswerRequest::class
     ];
 
