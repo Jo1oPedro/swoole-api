@@ -3,6 +3,7 @@
 namespace App\http\Controllers;
 
 use App\entitys\UserEntity;
+use App\rabbitmq\RabbitmqManager;
 use App\repositorys\UserMapper;
 use Cascata\Framework\Http\Response;
 use Firebase\JWT\JWT;
@@ -30,6 +31,11 @@ class SignInController
         ];
 
         $jwt = JWT::encode($payload, $_ENV['JWT_KEY'], 'HS256');
+
+        RabbitmqManager::publishMessage(
+            'user_registered',
+            $user->getEmail()
+        );
 
         return Response::ok($jwt);
     }
