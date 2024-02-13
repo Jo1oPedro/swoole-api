@@ -1,3 +1,7 @@
 /vendor
 .idea
 /backupBD
+/apiEnvs/.env
+.env
+nginx/access.log
+logs
