@@ -4,7 +4,6 @@ namespace Cascata\Framework\Http\Middleware;
 
 use Cascata\Framework\Http\Response;
 use Cascata\Framework\Http\route\Route;
-use Cascata\Framework\Http\route\Router;
 use FastRoute\Dispatcher;
 use Swoole\Http\Request;
 
