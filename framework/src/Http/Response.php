@@ -34,6 +34,15 @@ class Response
         ];
     }
 
+    public static function response(int $code = 200, array $headers = [], mixed $data = ''): self
+    {
+        return new self(
+            $code,
+            $headers,
+            json_encode($data)
+        );
+    }
+
     public static function ok(mixed $data): self
     {
         return new self(
