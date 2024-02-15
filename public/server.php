@@ -20,12 +20,11 @@ $container = require_once BASE_PATH . "/config/services.php";
 $dotEnv = new Dotenv();
 $dotEnv->load(BASE_PATH . "/apiEnvs/.env");
 
-$server = new Server('0.0.0.0', '9999');
+$server = new Server('0.0.0.0', (int) $_ENV['PORT']);
 
 $server->on('start', function (Server $server) {
-    echo 'HTTP Server ready at http://localhost:9999' . PHP_EOL;
+    echo 'HTTP Server ready at http://localhost:' . $_ENV['PORT'] . PHP_EOL;
 });
-
 
 $server->on('request', function (Request $request, Response $response) {
     if($request->server['request_uri'] === '/favicon.ico') {
