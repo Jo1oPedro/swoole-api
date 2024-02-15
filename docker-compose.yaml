@@ -13,13 +13,23 @@ services:
       - ./Migrations:/var/www/html/Migrations
       - ./logs:/var/www/html/logs
     ports:
-      - '9999:9999'
+      - '5000:9999'
     tty: true
     stdin_open: true
+    environment:
+      - PORT=9999
+    ##deploy:
+    ##  replicas: 2
+    networks:
+      - cascata
   api02:
     <<: *api
     ports:
-      - '10000:9999'
+      - '10000:7777'
+    environment:
+      - PORT=7777
+    networks:
+      - cascata
   nginx:
     image: nginx:latest
     volumes:
@@ -29,13 +39,16 @@ services:
       - api01
       - api02
     ports:
-      - "8888:9999"
-
+      - "8888:8888"
+    networks:
+      - cascata
   banco_de_dados_em_memoria:
     image: memcached:1.6.21
     ports:
-      - '10211:11211'
+      - '11211:11211'
     command: -m 64
+    networks:
+      - cascata
   banco_de_dados_relacional:
     #image: mysql:5.7
     image: mysql:latest
@@ -52,6 +65,8 @@ services:
       MYSQL_DATABASE: docker-php
     volumes:
       - ./backupBD/database:/var/lib/mysql
+    networks:
+      - cascata
   phpmyadmin:
       image: phpmyadmin/phpmyadmin
       restart: always
@@ -66,6 +81,8 @@ services:
         PMA_HOST: banco_de_dados_relacional
       depends_on:
         - banco_de_dados_relacional
+      networks:
+        - cascata
   mensageria:
     image: rabbitmq:management
     ports:
@@ -74,3 +91,7 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    networks:
+      - cascata
+networks:
+  cascata:
