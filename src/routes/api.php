@@ -2,6 +2,7 @@
 
 use App\http\Controllers\ProductController;
 use App\http\Controllers\SignInController;
+use App\http\Controllers\SignOutController;
 use Cascata\Framework\Http\Middleware\Authenticate;
 use Cascata\Framework\Http\route\Route;
 
@@ -22,6 +23,7 @@ $router->addMiddlewareGroup([Authenticate::class], function (Route $route) {
         $route->addRoute('GET', '/php', [ProductController::class, 'index']);
     });
     $route->addRoute('GET', '/cascata', [ProductController::class, 'index']);
+    $route->addRoute('POST', '/logout', [SignOutController::class, 'signOut']);
 });
 
 $router->addRoute('GET', '/x', function (\Swoole\Http\Request $request, ProductController $productController) {
