@@ -3,22 +3,28 @@
 namespace Cascata\Framework\Http\Middleware;
 
 use Cascata\Framework\Http\Response;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 use Swoole\Http\Request;
 
 class Authenticate implements MiddlewareInterface
 {
+    public function __construct(
+        private \Memcached $memcached
+    ) {}
+
     public function process(Request $request, RequestHandlerInterface $next): Response
     {
-        if(empty($request->header['authorization'])) {
+        if (empty($request->header['authorization'])) {
             return Response::unauthorized();
         }
 
-        $token = str_replace('Bearer ', '', $request->header['authorization']);
+        $token = getAuthorizationToken($request);
+
+        if($this->memcached->get($token) === $token) {
+            return Response::unauthorized('Token invalido');
+        }
 
         try {
-            JWT::decode($token, new Key($_ENV['JWT_KEY'], 'HS256'));
+            getAuthenticatedUserData($request);
         } catch (\Throwable $throwable) {
             return Response::unauthorized($throwable->getMessage());
         }
