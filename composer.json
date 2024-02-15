@@ -16,7 +16,8 @@
     },
     "require": {
         "cascata/framework": "dev-main",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "ext-memcached": "*"
     },
     "scripts": {
         "create-migration": "vendor/bin/doctrine-migrations generate",

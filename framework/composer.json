@@ -3,7 +3,10 @@
     "autoload": {
         "psr-4": {
             "Cascata\\Framework\\": "src/"
-        }
+        },
+        "files": [
+            "Helpers.php"
+        ]
     },
     "require": {
         "nikic/fast-route": "^1.3",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "557111f6e4c5b2fd5b5d3ce1ca19d368",
+    "content-hash": "cc17ffd3458a32b39b2654f8947d1a51",
     "packages": [
         {
             "name": "cascata/framework",
@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "framework",
-                "reference": "8f019aee4d4c1ec35cfafc6f3301573d6c91d618"
+                "reference": "0b09359b391be9883c8223cee8f19c7df9826152"
             },
             "require": {
                 "doctrine/migrations": "^3.7",
@@ -32,7 +32,10 @@
             "autoload": {
                 "psr-4": {
                     "Cascata\\Framework\\": "src/"
-                }
+                },
+                "files": [
+                    "Helpers.php"
+                ]
             },
             "transport-options": {
                 "relative": true
@@ -2244,7 +2247,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "ext-memcached": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"
