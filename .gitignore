@@ -1,7 +1,8 @@
 /vendor
 .idea
-/backupBD
 /apiEnvs/.env
 .env
-nginx/access.log
+/docker/backup_banco_de_dados_relacional
+/docker/nginx/access.log
+/docker/phpmyadmin
 logs

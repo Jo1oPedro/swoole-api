@@ -17,8 +17,8 @@ require_once BASE_PATH . "/src/routes/api.php";
 /** @var ContainerInterface $container */
 $container = require_once BASE_PATH . "/config/services.php";
 
-$dotEnv = new Dotenv();
-$dotEnv->load(BASE_PATH . "/apiEnvs/.env");
+//$dotEnv = new Dotenv();
+//$dotEnv->load(BASE_PATH . "/apiEnvs/.env");
 
 $server = new Server('0.0.0.0', (int) $_ENV['PORT']);
 
