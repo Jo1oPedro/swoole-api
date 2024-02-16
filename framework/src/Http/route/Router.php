@@ -2,7 +2,7 @@
 
 namespace Cascata\Framework\Http\route;
 
-use Cascata\Framework\Container\GlobalContainer;
+use Cascata\Framework\Container\Container;
 use Cascata\Framework\Http\Response;
 use ReflectionClass;
 use ReflectionFunction;
@@ -20,7 +20,7 @@ class Router
         if(is_array($handler)) {
             [$controllerId, $method] = $handler;
 
-            $controller = GlobalContainer::getInstance()->get($controllerId);
+            $controller = Container::getInstance()->get($controllerId);
             $handler = [$controller, $method];
             $vars = $this->autoWireMethod($handler, $vars, $request);
             return call_user_func_array($handler, $vars);
@@ -66,7 +66,7 @@ class Router
                 continue;
             }
 
-            $vars[$parameter->name] = GlobalContainer::getInstance()->get($parameter->getType()->getName());
+            $vars[$parameter->name] = Container::getInstance()->get($parameter->getType()->getName());
         }
         return $vars;
     }

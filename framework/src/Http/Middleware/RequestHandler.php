@@ -2,7 +2,7 @@
 
 namespace Cascata\Framework\Http\Middleware;
 
-use Cascata\Framework\Container\GlobalContainer;
+use Cascata\Framework\Container\Container;
 use Cascata\Framework\Http\Response;
 use Cascata\Framework\Http\Request;
 
@@ -23,7 +23,7 @@ class RequestHandler implements RequestHandlerInterface
         /** @var MiddlewareInterface $middlewareClass */
         $middlewareClass = array_shift($this->middlewares);
 
-        return GlobalContainer::getInstance()
+        return Container::getInstance()
             ->get($middlewareClass)
             ->process($request, $this);
     }

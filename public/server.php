@@ -1,11 +1,10 @@
 <?php
 
+use Cascata\Framework\Bootstrap\Dependencies;
 use Cascata\Framework\Http\Middleware\RequestHandler;
-use Psr\Container\ContainerInterface;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 use Swoole\Http\Server;
-use Symfony\Component\Dotenv\Dotenv;
 
 Co::set(['hook_flags', SWOOLE_HOOK_ALL]);
 
@@ -14,11 +13,7 @@ define("BASE_PATH", dirname(__DIR__));
 require_once BASE_PATH . "/vendor/autoload.php";
 require_once BASE_PATH . "/src/routes/api.php";
 
-/** @var ContainerInterface $container */
-$container = require_once BASE_PATH . "/config/services.php";
-
-//$dotEnv = new Dotenv();
-//$dotEnv->load(BASE_PATH . "/apiEnvs/.env");
+Dependencies::start();
 
 $server = new Server('0.0.0.0', (int) $_ENV['PORT']);
 
