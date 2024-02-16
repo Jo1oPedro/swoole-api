@@ -19,11 +19,11 @@ services:
     environment:
       - PORT=9999
       - DB_NAME=pdo_mysql
-      - DB_USER= ${MYSQL_USER}
-      - DB_PASSWORD= ${MYSQL_PASSWORD}
-      - DB_DATABASE= docker-php
-      - DB_PORT= 3306
-      - DB_HOST= banco_de_dados_relacional
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_DATABASE=docker-php
+      - DB_PORT=3306
+      - DB_HOST=banco_de_dados_relacional
       - JWT_KEY=${JWT_KEY}
       - LOG_STORAGE=logs/app.log
       - MAIL_HOST=smtp.gmail.com
