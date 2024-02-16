@@ -9,7 +9,6 @@ services:
       - ./src:/var/www/html/src
       - ./framework:/var/www/html/framework
       - ./config:/var/www/html/config
-      - ./apiEnvs:/var/www/html/apiEnvs
       - ./Migrations:/var/www/html/Migrations
       - ./logs:/var/www/html/logs
     ports:
