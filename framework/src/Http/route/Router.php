@@ -7,7 +7,7 @@ use Cascata\Framework\Http\Response;
 use ReflectionClass;
 use ReflectionFunction;
 use ReflectionMethod;
-use Swoole\Http\Request;
+use Cascata\Framework\Http\Request;
 
 
 class Router
@@ -15,7 +15,7 @@ class Router
 
     public function __invoke(Request $request): Response
     {
-        [$handler, $vars] = [$request->server['requestHandler'], $request->server['requestVars']];//$routeInfo;
+        [$handler, $vars] = [$request->server['requestHandler'], $request->server['requestVars']];
 
         if(is_array($handler)) {
             [$controllerId, $method] = $handler;
@@ -52,19 +52,19 @@ class Router
 
             $parameterNamespace = $parameter->getType()->getName();
 
-            if($parameterNamespace === 'Swoole\Http\Request') {
+            if($parameterNamespace === 'Cascata\Framework\Http\Request') {
                 $vars[$parameter->name] = $request;
                 continue;
             }
 
-            /*$reflectionClass = new ReflectionClass($parameterNamespace);
-            if($reflectionClass->isSubclassOf('App\requests\FormRequest')) {
+            $reflectionClass = new ReflectionClass($parameterNamespace);
+            if($reflectionClass->isSubclassOf('Cascata\Framework\Http\requestValidation\FormRequest')) {
                 $formRequest = $reflectionClass->newInstance($request);
                 $method = $reflectionClass->getMethod('validateRequest');
                 $method->invoke($formRequest);
                 $vars[$parameter->name] = $formRequest;
                 continue;
-            }*/
+            }
 
             $vars[$parameter->name] = GlobalContainer::getInstance()->get($parameter->getType()->getName());
         }

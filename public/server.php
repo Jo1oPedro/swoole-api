@@ -31,13 +31,15 @@ $server->on('request', function (Request $request, Response $response) {
        $response->end('');
        return;
     };
+
+    $requestWrapper = new \Cascata\Framework\Http\Request($request);
     $requestHandler = new RequestHandler();
 
     list(
         $statusCode,
         $headers,
         $content
-    ) = $requestHandler->handle($request)->toArray();
+    ) = $requestHandler->handle($requestWrapper)->toArray();
 
     $response->setStatusCode($statusCode ?? 200);
     foreach($headers as $header => $value) {

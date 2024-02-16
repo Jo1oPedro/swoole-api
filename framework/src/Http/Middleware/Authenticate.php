@@ -3,7 +3,7 @@
 namespace Cascata\Framework\Http\Middleware;
 
 use Cascata\Framework\Http\Response;
-use Swoole\Http\Request;
+use Cascata\Framework\Http\Request;
 
 class Authenticate implements MiddlewareInterface
 {
@@ -24,7 +24,7 @@ class Authenticate implements MiddlewareInterface
         }
 
         try {
-            getAuthenticatedUserData($request);
+            $request->setAuthenticatedUserInfo(getAuthenticatedUserData($request));
         } catch (\Throwable $throwable) {
             return Response::unauthorized($throwable->getMessage());
         }

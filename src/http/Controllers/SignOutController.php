@@ -3,7 +3,7 @@
 namespace App\http\Controllers;
 
 use Cascata\Framework\Http\Response;
-use Swoole\Http\Request;
+use Cascata\Framework\Http\Request;
 
 class SignOutController
 {

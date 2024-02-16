@@ -3,11 +3,11 @@
 namespace App\http\Controllers;
 
 use App\entitys\UserEntity;
+use App\http\requests\SignInRequest;
 use App\rabbitmq\RabbitmqManager;
 use App\repositorys\UserMapper;
 use Cascata\Framework\Http\Response;
 use Firebase\JWT\JWT;
-use Swoole\Http\Request;
 
 class SignInController
 {
@@ -15,9 +15,9 @@ class SignInController
         private UserMapper $mapper
     ) {}
 
-    public function signIn(Request $request): Response
+    public function signIn(SignInRequest $request): Response
     {
-        $user = UserEntity::create(...$request->post);
+        $user = UserEntity::create(...$request->getValidatedFields());
         try {
             $this->mapper->save($user);
         } catch (\PDOException $exception) {

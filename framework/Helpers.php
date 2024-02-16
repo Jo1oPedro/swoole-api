@@ -2,11 +2,11 @@
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use Swoole\Http\Request;
+use Cascata\Framework\Http\Request;
 
 function getAuthorizationToken(Request $request): string
 {
-    return str_replace('Bearer ', '', $request->header['authorization']);
+    return str_replace('Bearer ', '', $request->header['authorization'] ?? "");
 }
 
 function getAuthenticatedUserData(Request $request): stdClass
