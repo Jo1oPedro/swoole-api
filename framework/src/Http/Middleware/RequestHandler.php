@@ -8,11 +8,13 @@ use Cascata\Framework\Http\Request;
 
 class RequestHandler implements RequestHandlerInterface
 {
-    private array $middlewares = [
-        ExtractRouteInfo::class,
-        ParseRequest::class,
-        AnswerRequest::class
-    ];
+    private array $middlewares = [];
+
+    public function __construct()
+    {
+        $kernelClass = new \ReflectionClass("App\\http\\Kernel");
+        $this->middlewares = $kernelClass->getProperty("middleware")->getDefaultValue();
+    }
 
     public function handle(Request $request): Response
     {
@@ -20,7 +22,6 @@ class RequestHandler implements RequestHandlerInterface
             Response::internalServerError('');
         }
 
-        /** @var MiddlewareInterface $middlewareClass */
         $middlewareClass = array_shift($this->middlewares);
 
         return Container::getInstance()
