@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 
 class Container extends \DI\Container
 {
-    public static ?Container $instance = null;
+    private static ?Container $instance = null;
     private function __construct(MutableDefinitionSource|array $definitions = [], ProxyFactory $proxyFactory = null, ContainerInterface $wrapperContainer = null)
     {
         parent::__construct($definitions, $proxyFactory, $wrapperContainer);
