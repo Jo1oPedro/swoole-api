@@ -1,9 +1,11 @@
 <?php
 
-namespace Cascata\Framework\Http\Middleware;
+namespace App\http\Middleware;
 
-use Cascata\Framework\Http\Response;
+use Cascata\Framework\Http\Middleware\MiddlewareInterface;
+use Cascata\Framework\Http\Middleware\RequestHandlerInterface;
 use Cascata\Framework\Http\Request;
+use Cascata\Framework\Http\Response;
 
 class Authenticate implements MiddlewareInterface
 {

@@ -3,7 +3,7 @@
 use App\http\Controllers\ProductController;
 use App\http\Controllers\SignInController;
 use App\http\Controllers\SignOutController;
-use Cascata\Framework\Http\Middleware\Authenticate;
+use App\http\Middleware\Authenticate;
 use Cascata\Framework\Http\route\Route;
 
 $router = Route::getInstance();
