@@ -21,6 +21,7 @@
         "respect/validation": "^2.3"
     },
     "require-dev": {
-        "swoole/ide-helper": "^5.1"
+        "swoole/ide-helper": "^5.1",
+        "phpunit/phpunit": "^11.0"
     }
 }
