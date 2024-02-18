@@ -30,13 +30,28 @@ class Events
 
     public function dispatch(string $event, ...$parameters): void
     {
-        $listeners = [];
-        if(isset($this->listeners[$event])) {
-            $listeners = $this->listeners[$event];
-        }
+        $listeners = $this->getListerner($event);
 
         foreach ($listeners as $listener) {
             Timer::after(1, $listener, ...$parameters);
         }
+    }
+
+    public function dispatchNow(string $event, ...$parameters): void
+    {
+        $listeners = $this->getListerner($event);
+
+        foreach ($listeners as $listener) {
+            call_user_func_array($listener, $parameters);
+        }
+    }
+
+    private function getListerner(string $event)
+    {
+        $listeners = [];
+        if(isset($this->listeners[$event])) {
+            $listeners = $this->listeners[$event];
+        }
+        return $listeners;
     }
 }
