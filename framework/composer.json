@@ -18,7 +18,9 @@
         "monolog/monolog": "^3.5",
         "php-amqplib/php-amqplib": "^3.6",
         "phpmailer/phpmailer": "^6.9",
-        "respect/validation": "^2.3"
+        "respect/validation": "^2.3",
+        "illuminate/database": "^10.38",
+        "symfony/console": "^7.0"
     },
     "require-dev": {
         "swoole/ide-helper": "^5.1",
