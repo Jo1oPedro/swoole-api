@@ -3,6 +3,7 @@
 namespace App\http\Controllers;
 
 use App\entitys\UserEntity;
+use App\events\UserRegistered;
 use App\http\requests\SignInRequest;
 use App\rabbitmq\RabbitmqManager;
 use App\repositorys\UserMapper;
@@ -33,7 +34,11 @@ class SignInController
 
         $jwt = JWT::encode($payload, $_ENV['JWT_KEY'], 'HS256');
 
-        Events::getInstance()->dispatch('user-registered-event', $user->getEmail());
+        Events::getInstance()->dispatch(
+            UserRegistered::class,
+            $user,
+            "Bem vindo ao sistema"
+        );
 
         /*RabbitmqManager::publishMessage(
             'user_registered',

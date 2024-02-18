@@ -3,12 +3,14 @@
 namespace App\events;
 
 use App\email\Email;
+use App\entitys\UserEntity;
+use Cascata\Framework\events\EventInterface;
 
-class UserRegistered
+class UserRegistered implements EventInterface
 {
     private string $event = 'user-registered-event';
 
-    public function __invoke(string $recipient, string $body = "")
+    public function __invoke(UserEntity $userEntity, string $body = "")
     {
         $email = new Email();
         $email->send(
@@ -17,11 +19,11 @@ class UserRegistered
                 'name' => 'cascata'
             ],
             [
-                'address' => $recipient,
+                'address' => $userEntity->getEmail(),
                 'name' => 'cascata'
             ],
             'OIIIIIIIIIII',
-            'oi do cascata'
+            $body
         );
     }
 }

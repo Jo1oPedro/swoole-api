@@ -13,7 +13,7 @@ class SignInRequest extends FormRequest
             'email' => 'notBlank|email|stringType',
             'password' => 'notBlank|stringType',
             'name' => 'notBlank|stringType',
-            'numero' => 'intType|between:10,20',
+            //'numero' => 'between:10,20',
         ];
     }
 }

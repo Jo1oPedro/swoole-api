@@ -2,12 +2,11 @@
 
 namespace Cascata\Framework\events;
 
-use Cascata\Framework\Container\Container;
-use Swoole\Table;
+use Swoole\Timer;
 
 class Events
 {
-    protected array $events = [];
+    protected array $listeners = [];
 
     private static ?Events $instance = null;
 
@@ -21,28 +20,23 @@ class Events
         return self::$instance;
     }
 
-    public function addEvent(string $key, callable $callback): void
+    public function addListener(string $event, callable $callback): void
     {
-        if(!isset($this->events[$key])) {
-            $this->events[$key] = [];
+        if(!isset($this->listeners[$event])) {
+            $this->listeners[$event] = [];
         }
-        $this->events[$key][] = $callback;
+        $this->listeners[$event][] = $callback;
     }
 
-    public function getEvents(): array
+    public function dispatch(string $event, ...$parameters): void
     {
-        return $this->events;
-    }
+        $listeners = [];
+        if(isset($this->listeners[$event])) {
+            $listeners = $this->listeners[$event];
+        }
 
-    public function dispatch(string $key, string $data): void
-    {
-        $container = Container::getInstance();
-
-        /** @var Table $eventsTable */
-        $eventsTable = $container->get('events-table');
-        $eventsTable->set(count($eventsTable), [
-            'event_key' => $key,
-            'event_data' => $data
-        ]);
+        foreach ($listeners as $listener) {
+            Timer::after(1, $listener, ...$parameters);
+        }
     }
 }
