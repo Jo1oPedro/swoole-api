@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class Command
 {
-    public static function processCommands()
+    public static function processCommands(): bool
     {
         $input = self::getConsoleInput();
         switch ($input->getArgument('action')) {

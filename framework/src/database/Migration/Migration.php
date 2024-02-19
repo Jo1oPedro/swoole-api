@@ -14,7 +14,7 @@ class Migration
     {
         $consoleOutput = new ConsoleOutput();
         $db = Container::getInstance()->get('db')->schema();
-        $migrationDir = scandir(BASE_PATH . "/database/Migration");
+        $migrationDir = scandir(BASE_PATH . "/database/migrations");
         $migrationDir = array_slice($migrationDir, 2);
         foreach ($migrationDir as $migration) {
             $consoleOutput->writeln("Running migration: {$migration}");
@@ -40,7 +40,7 @@ class Migration
 
         $currentTimestamp = date('Y_m_d_His', time());
         file_put_contents(
-            BASE_PATH . "/database/Migration/{$currentTimestamp}_{$input->getOption('name')}.php",
+            BASE_PATH . "/database/migrations/{$currentTimestamp}_{$input->getOption('name')}.php",
             $migrationContent
         );
     }

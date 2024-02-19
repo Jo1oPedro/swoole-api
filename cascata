@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+use Cascata\Framework\Bootstrap\Command;
+use Symfony\Component\Console\Output\ConsoleOutput;
+
+require_once __DIR__ . "/vendor/autoload.php";
+
+define('BASE_PATH', __DIR__);
+
+if(Command::processCommands()) {
+    return;
+}
+
+new ConsoleOutput("Comando invalido");
