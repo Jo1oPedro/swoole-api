@@ -23,6 +23,6 @@ function getAuthenticatedUserData(Request $request): stdClass
 function getStringBetween(string $string, string $start, string $end)
 {
     $firstPosition = strpos($string, $start) + 1;
-    $lastPosition = strrpos($string, $end) + 1;
-    return substr($string, $firstPosition, (strlen($string) - $lastPosition));
+    $lastPosition = strrpos($string, $end);
+    return substr($string, $firstPosition, ($lastPosition - $firstPosition));
 }
