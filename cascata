@@ -12,4 +12,4 @@ if(Command::processCommands()) {
     return;
 }
 
-new ConsoleOutput("Comando invalido");
+(new ConsoleOutput())->writeln("Comando invalido");
