@@ -11,6 +11,7 @@ services:
       - ./config:/var/www/html/config
       - ./logs:/var/www/html/logs
       - ./database:/var/www/html/database
+      - ./cascata:/var/www/html/cascata
     ports:
       - '5000:9999'
     tty: true
@@ -68,7 +69,7 @@ services:
   banco_de_dados_em_memoria:
     image: memcached:1.6.21
     ports:
-      - '11211:11211'
+      - '10211:11211'
     command: -m 64
     networks:
       - cascata

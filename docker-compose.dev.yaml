@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  api01: &api
+    build:
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./public:/var/www/html/public
+      - ./src:/var/www/html/src
+      - ./framework:/var/www/html/framework
+      - ./config:/var/www/html/config
+      - ./logs:/var/www/html/logs
+      - ./database:/var/www/html/database
+    environment:
+      - PORT=9999
+      - DB_DRIVER=${DB_DRIVER}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_PORT=${DB_PORT}
+      - DB_HOST=banco_de_dados_relacional
+      - JWT_KEY=${JWT_KEY}
+      - LOG_STORAGE=logs/app.log
+      - MAIL_HOST=smtp.gmail.com
+      - MAIL_PORT=587
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+  api02:
+    <<: *api
+    ports:
+      - '10000:7777'
+    environment:
+      - PORT=7777
+      - DB_DRIVER=${DB_DRIVER}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_PORT=${DB_PORT}
+      - DB_HOST=banco_de_dados_relacional
+      - JWT_KEY=${JWT_KEY}
+      - LOG_STORAGE=logs/app.log
+      - MAIL_HOST=smtp.gmail.com
+      - MAIL_PORT=587
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+  nginx:
+    image: nginx:latest
+  banco_de_dados_em_memoria:
+    image: memcached:1.6.21
+  banco_de_dados_relacional:
+    #image: mysql:5.7
+    image: mysql:latest
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+  mensageria:
+    image: rabbitmq:management
+networks:
+  cascata:
