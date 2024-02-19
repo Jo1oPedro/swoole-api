@@ -2,7 +2,7 @@
 
 # Set the paths to your Docker Compose files and .env file
 $dockerComposeFiles = "docker-compose.yaml", "docker-compose.dev.yaml"
-$envFile = ".env.local"
+$envFile = ".env"
 
 # Construct the Docker Compose command
 $dockerComposeCommand = "docker-compose"
