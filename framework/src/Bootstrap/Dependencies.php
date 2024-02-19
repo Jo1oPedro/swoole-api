@@ -48,7 +48,7 @@ class Dependencies
     private static function registerMemcached(Container $container)
     {
         $memcached = new Memcached();
-        $memcached->addServer('banco_de_dados_em_memoria', 11211);
+        $memcached->addServer('banco_de_dados_em_memoria', 10211);
         $container->set(Memcached::class, $memcached);
     }
 
