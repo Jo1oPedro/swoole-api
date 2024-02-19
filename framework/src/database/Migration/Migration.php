@@ -18,7 +18,7 @@ class Migration
         $migrationDir = array_slice($migrationDir, 2);
         foreach ($migrationDir as $migration) {
             $consoleOutput->writeln("Running migration: {$migration}");
-            $migrationClass = require_once BASE_PATH . "/database/Migration/{$migration}";
+            $migrationClass = require_once BASE_PATH . "/database/migrations/{$migration}";
             $migrationClass->up($db);
         }
     }

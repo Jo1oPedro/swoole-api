@@ -3,6 +3,7 @@
 namespace Cascata\Framework\Bootstrap;
 
 use Cascata\Framework\database\Migration\Migration;
+use Cascata\Framework\database\Seed\Seed;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -19,12 +20,13 @@ class Command
             case 'migrate':
                 Migration::handle($input);
                 return true;
-            case 'seed':
-                (new ConsoleOutput())->writeln('Running seed');
-                return true;
             case 'create-migration':
                 Migration::create($input);
                 (new ConsoleOutput())->writeln('Migration created');
+                return true;
+            case 'db:seed':
+                (new ConsoleOutput())->writeln('Running seed');
+                Seed::handle($input);
                 return true;
         }
         return false;

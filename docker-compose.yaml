@@ -10,7 +10,7 @@ services:
       - ./framework:/var/www/html/framework
       - ./config:/var/www/html/config
       - ./logs:/var/www/html/logs
-      - ./database/Migration:/var/www/html/database/Migration
+      - ./database:/var/www/html/database
     ports:
       - '5000:9999'
     tty: true
