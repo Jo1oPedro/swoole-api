@@ -18,10 +18,10 @@ class Command
         $input = self::getConsoleInput();
         switch ($input->getArgument('action')) {
             case 'migrate':
-                Migration::handle($input);
+                Migration::handle($input->getOption('fresh'));
                 return true;
             case 'create-migration':
-                Migration::create($input);
+                Migration::create($input->getOption('name'));
                 (new ConsoleOutput())->writeln('Migration created');
                 return true;
             case 'db:seed':

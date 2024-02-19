@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class Migration
 {
-    public static function handle(InputInterface $input)
+    public static function handle(bool $fresh)
     {
         $consoleOutput = new ConsoleOutput();
         $db = Container::getInstance()->get('db')->schema();
@@ -23,10 +23,10 @@ class Migration
         }
     }
 
-    public static function create(InputInterface $input)
+    public static function create(string $name)
     {
         $migrationTable = getStringBetween(
-            $input->getOption('name'),
+            $name,
             "_",
             "_"
         );
