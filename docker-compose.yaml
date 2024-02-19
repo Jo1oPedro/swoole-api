@@ -9,19 +9,19 @@ services:
       - ./src:/var/www/html/src
       - ./framework:/var/www/html/framework
       - ./config:/var/www/html/config
-      - ./Migrations:/var/www/html/Migrations
       - ./logs:/var/www/html/logs
+      - ./database/Migration:/var/www/html/database/Migration
     ports:
       - '5000:9999'
     tty: true
     stdin_open: true
     environment:
       - PORT=9999
-      - DB_NAME=pdo_mysql
-      - DB_USER=${MYSQL_USER}
-      - DB_PASSWORD=${MYSQL_PASSWORD}
-      - DB_DATABASE=docker-php
-      - DB_PORT=3306
+      - DB_DRIVER=${DB_DRIVER}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_PORT=${DB_PORT}
       - DB_HOST=banco_de_dados_relacional
       - JWT_KEY=${JWT_KEY}
       - LOG_STORAGE=logs/app.log
@@ -39,11 +39,11 @@ services:
       - '10000:7777'
     environment:
       - PORT=7777
-      - DB_NAME=pdo_mysql
-      - DB_USER=${MYSQL_USER}
-      - DB_PASSWORD=${MYSQL_PASSWORD}
-      - DB_DATABASE=docker-php
-      - DB_PORT=3306
+      - DB_DRIVER=${DB_DRIVER}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_PORT=${DB_PORT}
       - DB_HOST=banco_de_dados_relacional
       - JWT_KEY=${JWT_KEY}
       - LOG_STORAGE=logs/app.log
@@ -82,10 +82,10 @@ services:
     restart: unless-stopped
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: docker-php
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
     volumes:
       - ./docker/backup_banco_de_dados_relacional/database:/var/lib/mysql
     networks:

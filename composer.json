@@ -2,7 +2,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/",
-            "Database\\Migrations\\": "Migrations",
+            "Database\\Migrations\\": "database",
             "Tests\\": "tests/"
         }
     },

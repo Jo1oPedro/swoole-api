@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Cascata\Framework\Bootstrap\Command;
 use Cascata\Framework\Bootstrap\Dependencies;
 use Cascata\Framework\Bootstrap\Events;
 use Cascata\Framework\Bootstrap\SwooleServer;
@@ -15,4 +16,7 @@ require_once BASE_PATH . "/src/routes/api.php";
 
 Dependencies::start();
 Events::registerEvents();
+if(Command::processCommands()) {
+    return;
+}
 SwooleServer::start();
