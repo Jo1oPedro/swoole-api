@@ -5,10 +5,10 @@ namespace Cascata\Framework\Bootstrap;
 use App\Database\Connection;
 use Cascata\Framework\Container\Container;
 use Cascata\Framework\Http\route\Route;
+use Illuminate\Database\Capsule\Manager;
 use Memcached;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use PDO;
 
 class Dependencies
 {
@@ -19,6 +19,7 @@ class Dependencies
         self::registerRoute($container);
         self::registerPDO($container);
         self::registerMemcached($container);
+        self::registerDbCapsule($container);
     }
 
     private static function registerLogger(Container $container)
@@ -39,9 +40,9 @@ class Dependencies
 
     private static function registerPDO(Container $container)
     {
-        $container->set(PDO::class, function () {
+        /*$container->set(PDO::class, function () {
             return Connection::getInstance();
-        });
+        });*/
     }
 
     private static function registerMemcached(Container $container)
@@ -49,5 +50,26 @@ class Dependencies
         $memcached = new Memcached();
         $memcached->addServer('banco_de_dados_em_memoria', 11211);
         $container->set(Memcached::class, $memcached);
+    }
+
+    private static function registerDbCapsule(Container $container)
+    {
+        $container->set('db', function () {
+            $capsule = new Manager();
+            $capsule->addConnection([
+                'driver' => $_ENV['DB_DRIVER'],
+                'host' => 'banco_de_dados_relacional',
+                'database' => $_ENV['DB_DATABASE'],
+                'username' => $_ENV['DB_USER'],
+                'password' => $_ENV['DB_PASSWORD'],
+                'charset' => 'utf8',
+                'collation' => 'utf8_unicode_ci',
+                'prefix' => '',
+            ]);
+            $capsule->setAsGlobal();
+            $capsule->bootEloquent();
+
+            return $capsule;
+        });
     }
 }
