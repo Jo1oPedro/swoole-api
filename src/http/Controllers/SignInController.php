@@ -18,15 +18,15 @@ class SignInController
     public function signIn(SignInRequest $request): Response
     {
         /** @var Manager $container */
-        $container = Container::getInstance()->get('db');
+        //$container = Container::getInstance()->get('db');
         //$container->getConnection()->select('SELECT * FROM users');
         //$queryAll = Manager::select('SELECT * FROM users');
 
         $user = User::create($request->getValidatedFields());
 
         $payload = [
-            'id' => $user->getId(),
-            'email' => $user->getEmail(),
+            'id' => $user->id,
+            'email' => $user->email,
             'exp' => time() + 60 * 60
         ];
 
