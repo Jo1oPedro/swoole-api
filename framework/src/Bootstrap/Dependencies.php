@@ -54,22 +54,21 @@ class Dependencies
 
     private static function registerDbCapsule(Container $container)
     {
-        $container->set('db', function () {
-            $capsule = new Manager();
-            $capsule->addConnection([
-                'driver' => $_ENV['DB_DRIVER'],
-                'host' => 'banco_de_dados_relacional',
-                'database' => $_ENV['DB_DATABASE'],
-                'username' => $_ENV['DB_USER'],
-                'password' => $_ENV['DB_PASSWORD'],
-                'charset' => 'utf8',
-                'collation' => 'utf8_unicode_ci',
-                'prefix' => '',
-            ]);
-            $capsule->setAsGlobal();
-            $capsule->bootEloquent();
+        $capsule = new Manager();
+        $capsule->addConnection([
+            'driver' => $_ENV['DB_DRIVER'],
+            'host' => 'banco_de_dados_relacional',
+            'database' => $_ENV['DB_DATABASE'],
+            'username' => $_ENV['DB_USER'],
+            'password' => $_ENV['DB_PASSWORD'],
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+        ]);
+        $capsule->setAsGlobal();
+        $capsule->bootEloquent();
 
-            return $capsule;
-        });
+        //return $capsule;
+        $container->set('db', $capsule);
     }
 }
