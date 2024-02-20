@@ -39,6 +39,7 @@ class Route extends RouteCollector
     {
         $this->middlewareGroup = $middlewares;
         $callback($this);
+        $this->middlewareGroup = [];
         return $this;
     }
 
