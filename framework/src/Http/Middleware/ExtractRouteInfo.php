@@ -43,7 +43,9 @@ class ExtractRouteInfo implements MiddlewareInterface
                         'requestVars' => $routeInfo[2]
                     ]
                 );
-                $next->injectMiddleware($routeInfo[1][2]);
+                if(!is_callable($routeInfo[1])) {
+                    $next->injectMiddleware($routeInfo[1][2]);
+                }
                 return $next->handle($request);
             default:
                 return Response::internalServerError("");
