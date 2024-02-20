@@ -2,12 +2,14 @@
 <?php
 
 use Cascata\Framework\Bootstrap\Command;
+use Cascata\Framework\Bootstrap\Dependencies;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 require_once __DIR__ . "/vendor/autoload.php";
 
 define('BASE_PATH', __DIR__);
 
+Dependencies::start();
 if(Command::processCommands()) {
     return;
 }

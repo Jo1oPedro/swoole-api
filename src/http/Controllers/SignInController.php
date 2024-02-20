@@ -5,26 +5,24 @@ namespace App\http\Controllers;
 use App\entitys\UserEntity;
 use App\events\UserRegistered;
 use App\http\requests\SignInRequest;
+use App\Models\User;
 use App\rabbitmq\RabbitmqManager;
-use App\repositorys\UserMapper;
+use Cascata\Framework\Container\Container;
 use Cascata\Framework\events\Events;
 use Cascata\Framework\Http\Response;
 use Firebase\JWT\JWT;
+use Illuminate\Database\Capsule\Manager;
 
 class SignInController
 {
-    public function __construct(
-        private UserMapper $mapper
-    ) {}
-
     public function signIn(SignInRequest $request): Response
     {
-        $user = UserEntity::create(...$request->getValidatedFields());
-        try {
-            $this->mapper->save($user);
-        } catch (\PDOException $exception) {
-            return Response::internalServerError($exception->getMessage());
-        }
+        /** @var Manager $container */
+        $container = Container::getInstance()->get('db');
+        //$container->getConnection()->select('SELECT * FROM users');
+        //$queryAll = Manager::select('SELECT * FROM users');
+
+        $user = User::create($request->getValidatedFields());
 
         $payload = [
             'id' => $user->getId(),
