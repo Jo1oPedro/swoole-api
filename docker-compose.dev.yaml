@@ -11,6 +11,9 @@ services:
       - ./config:/var/www/html/config
       - ./logs:/var/www/html/logs
       - ./database:/var/www/html/database
+      - ./tests/:/var/www/html/tests
+      - ./phpunit.xml:/var/www/html/phpunit.xml
+      - ./bootstrap-phpunit.php:/var/www/html/bootstrap-phpunit.php
     environment:
       - PORT=9999
       - DB_DRIVER=${DB_DRIVER}
