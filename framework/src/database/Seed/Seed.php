@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 
 class Seed
 {
-    public static function handle(InputInterface $input)
+    public static function handle(?InputInterface $input = null)
     {
         Container::getInstance()->get('db');
         $seedDir = scandir(BASE_PATH . "/database/seeders");

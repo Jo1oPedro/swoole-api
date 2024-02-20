@@ -19,6 +19,9 @@ class Migration
         foreach ($migrationDir as $migration) {
             $consoleOutput->writeln("Running migration: {$migration}");
             $migrationClass = require_once BASE_PATH . "/database/migrations/{$migration}";
+            if($fresh) {
+                $migrationClass->down($db);
+            }
             $migrationClass->up($db);
         }
     }
@@ -40,7 +43,7 @@ class Migration
 
         $currentTimestamp = date('Y_m_d_His', time());
         file_put_contents(
-            BASE_PATH . "/database/migrations/{$currentTimestamp}_{$input->getOption('name')}.php",
+            BASE_PATH . "/database/migrations/{$currentTimestamp}_{$name}.php",
             $migrationContent
         );
     }
