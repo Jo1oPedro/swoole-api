@@ -13,7 +13,8 @@
         }
     ],
     "require-dev": {
-        "swoole/ide-helper": "~5.0.0"
+        "swoole/ide-helper": "~5.0.0",
+        "phpunit/phpunit": "^11.0"
     },
     "require": {
         "cascata/framework": "dev-main",
