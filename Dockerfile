@@ -38,6 +38,6 @@ RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction
 
 RUN composer dump-autoload --optimize
 
-CMD ["php", "/var/www/html/public/server.php"]
+CMD ["php", "/var/www/html/public/server.php", "swoole-server"]
 #CMD ["php", "-S", "0.0.0.0:8000", "-t", "/var/www/html/public", "/var/www/html/public/index.php"]
 #CMD ["nodemon -L", "/var/www/html/public/server.php"]
