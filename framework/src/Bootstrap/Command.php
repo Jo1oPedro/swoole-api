@@ -2,56 +2,28 @@
 
 namespace Cascata\Framework\Bootstrap;
 
-use Cascata\Framework\database\Migration\Migration;
-use Cascata\Framework\database\Seed\Seed;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputDefinition;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Application;
 
 class Command
 {
-    public static function processCommands(): bool
+    public static function processCommands(): void
     {
-        $input = self::getConsoleInput();
-        switch ($input->getArgument('action')) {
-            case 'migrate':
-                Migration::handle($input->getOption('fresh'));
-                return true;
-            case 'create-migration':
-                Migration::create($input->getOption('name'));
-                (new ConsoleOutput())->writeln('Migration created');
-                return true;
-            case 'db:seed':
-                (new ConsoleOutput())->writeln('Running seed');
-                Seed::handle($input);
-                return true;
+        $application = new Application();
+
+        $frameworkCommands = array_slice(scandir(__DIR__ . "/../Commands"), 2);
+
+        foreach($frameworkCommands as $command) {
+            $command = str_replace(".php", "", $command);
+            $application->add(new ("Cascata\Framework\Commands\\{$command}")());
         }
-        return false;
-    }
 
-    private static function getConsoleInput(): InputInterface
-    {
-        global $argv;
+        $userCommands = array_slice(scandir(BASE_PATH . "/src/commands"), 2);
 
-        $output = new ConsoleOutput();
-
-        $definition = new InputDefinition([
-            new InputArgument('action', InputArgument::OPTIONAL, 'Action to be taken.'),
-            new InputOption('fresh', null, InputOption::VALUE_NONE, 'Make migration running fresh', null),
-            new InputOption('name', null, InputOption::VALUE_REQUIRED, 'Name the new model', null)
-        ]);
-
-        try {
-            return new ArgvInput($argv, $definition);
-        } catch (\Exception $exception) {
-            $output->writeln('');
-            $output->writeln(
-                '<error>There was an error while starting application:' . $exception->getMessage() . '</error>');
-            $output->writeln('');
-            exit(1);
+        foreach($userCommands as $command) {
+            $command = str_replace(".php", "", $command);
+            $application->add(new ("App\commands\\{$command}")());
         }
+
+        $application->run();
     }
 }

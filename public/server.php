@@ -16,7 +16,8 @@ require_once BASE_PATH . "/src/routes/api.php";
 
 Dependencies::start();
 Events::registerEvents();
+Command::processCommands();
 /*if(Command::processCommands()) {
     return;
 }*/
-SwooleServer::start();
+//SwooleServer::start();
